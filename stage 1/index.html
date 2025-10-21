@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testable Profile Card</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="main-content">
+        <nav class="header">
+            <a href="./index.html">Home</a>
+            <a href="./About.html">About</a>
+            <a href="./contact.html">Contact</a>
+        </nav>
+        <article class="profile-card" data-testid="test-profile-card">
+
+            <div class="profile-header">
+                <figure class="profile-avatar-container">
+                    <img src="./assets/IMG_2796.jpg" alt="Profile picture of Anyanwu Stephanie, a frontend wizard"
+                        class="profile-avatar" data-testid="test-user-avatar">
+                    <figcaption class="avatar-caption">Software Engineer</figcaption>
+                </figure>
+
+                <header class="profile-info-header">
+                    <h2 class="user-name" data-testid="test-user-name">Anyanwu Stephanie</h2>
+
+                    <p class="user-time-label">Current Time (ms):</p>
+                    <time class="user-time" data-testid="test-user-time">0000000000000</time>
+                </header>
+            </div>
+
+            <p class="user-bio" data-testid="test-user-bio">
+                Passionate frontend developer specializing in accessible, responsive, and performance-driven user
+                interfaces. I turn coffee into code and ideas into reality.
+            </p>
+
+            <hr class="separator">
+
+            <section class="hobbies-section">
+                <h3>Hobbies 🥳</h3>
+                <ul class="user-list" data-testid="test-user-hobbies">
+                    <li>Competitive Gaming</li>
+                    <li>Reading Sci-Fi/Fantasy</li>
+                    <li>Coding</li>
+                    <li>Watching Movies</li>
+                </ul>
+            </section>
+
+            <hr class="separator">
+
+            <section class="dislikes-section">
+                <h3>Dislikes 🤢</h3>
+                <ul class="user-list" data-testid="test-user-dislikes">
+                    <li>Unsemantic HTML</li>
+                    <li>Unnecessary Complexity</li>
+                    <li>Poor Accessibility</li>
+                    <li>Under-commented Code</li>
+                </ul>
+            </section>
+
+            <hr class="separator">
+
+            <nav class="social-links-nav" aria-label="User Social Links">
+                <h3>Connect</h3>
+                <ul class="social-links-list" data-testid="test-user-social-links">
+                    <li>
+                        <a href="https://github.com/lifeofstephanie" target="_blank" rel="noopener noreferrer"
+                            data-testid="test-user-social-github">
+                            GitHub
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://linkedin.com/in/anyanwu_stephanie_1" target="_blank" rel="noopener noreferrer"
+                            data-testid="test-user-social-linkedin">
+                            LinkedIn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/lifeofstephhhh" target="_blank" rel="noopener noreferrer"
+                            data-testid="test-user-social-twitter">
+                            Twitter
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </article>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

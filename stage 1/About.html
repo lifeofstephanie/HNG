@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testable Profile Card</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main data-testid="test-about-page" class="main-content">
+        <nav class="header">
+            <a href="./index.html">Home</a>
+            <a href="./About.html">About</a>
+            <a href="./contact.html">Contact</a>
+        </nav>
+        <div class="profile-card">
+            <div class="profile-header">
+                <figure class="profile-avatar-container">
+                    <img src="./assets/IMG_2796.jpg" alt="Profile picture of Anyanwu Stephanie, a frontend wizard"
+                        class="profile-avatar" data-testid="test-user-avatar">
+                    <figcaption class="avatar-caption">Software Engineer</figcaption>
+                </figure>
+
+                <header class="profile-info-header">
+                    <h2 class="user-name" data-testid="test-user-name">Anyanwu Stephanie</h2>
+
+                    <p class="user-time-label">Current Time (ms):</p>
+                    <time class="user-time" data-testid="test-user-time">0000000000000</time>
+                </header>
+            </div>
+            <section data-testid="test-about-bio" class="hobbies-section">
+                <h3>About Me</h3>
+                <div class="about-me">
+                    <p>I am Stephanie Anyanwu, a passionate frontend developer with over three years of experience
+                        building responsive web and mobile applications using ReactJS and React Native. I enjoy turning
+                        complex ideas into intuitive user interfaces and creating products that make people's lives
+                        easier. I am detail oriented, love solving problems through clean code, and constantly seek
+                        opportunities to learn, collaborate and grow as a developer.
+                    </p>
+                </div>
+            </section>
+
+            <section data-testid="test-about-goals" class="hobbies-section">
+                <h3>My Goals</h3>
+                <div class="about-me">
+                    <ul class="goals">
+                        <li>To strengthen my technical skills, particularly ReactJS.</li>
+                        <li>To gain hands-on experience working on real world projects in a collaborative environment
+                        </li>
+                        <li>To improve my problem solving speed and ability to write efficient high quality code.</li>
+                        <li>To challenge myself through tasks and grow into a more well-rounded engineer</li>
+                    </ul>
+                </div>
+            </section>
+            <section data-testid="test-about-confidence" class="hobbies-section">
+                <h3>Area of low confidence</h3>
+                <div class="about-me">
+                    <ul class="goals">
+                        <li>Public speaking and explaining my technical decisions under pressure.</li>
+                        <li>Explaining the theoritical aspect of programming.
+                        </li>
+                        <li>Maintaining tight deadlines and working under pressure.</li>
+                    </ul>
+                </div>
+            </section>
+            <section data-testid="test-about-future-note" class="hobbies-section">
+                <h3>Note to Future Self</h3>
+                <div class="about-me">
+                    <p>Keep pushing, even when things feel difficult or uncertain, always stick to God, no matter what.
+                        Every error, challenge and even the late night debugging sessions is part of growth. Remember
+                        how far you'ce come and that your're capable of more with God. Do not let imposter syndrome hold
+                        you back, you belong in greater heights.
+                    </p>
+                </div>
+            </section>
+            <section data-testid="test-about-extra" class="hobbies-section">
+                <h3>Extra Thoughts</h3>
+                <div class="about-me">
+                    <p>I am excited about this journey and eager to learn from the experience. I believe HNG will not
+                        only refine my technical skills but also help me develop teamwork, leadership and
+                        problem-solving abilities that go beyond code
+                    </p>
+                </div>
+            </section>
+
+
+        </div>
+    </main>
+</body>
+<script src="script.js"></script>
+
+</html>
