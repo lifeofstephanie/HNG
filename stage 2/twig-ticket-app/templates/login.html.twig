@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Login - Ticket Management{% endblock %}
+
+{% block content %}
+<nav class="bg-white shadow-sm">
+    <div class="container flex items-center justify-between py-4">
+        <a href="/public/" class="text-2xl font-bold text-purple-600">TicketHub</a>
+        <a href="/public/signup" class="btn btn-secondary">Sign Up</a>
+    </div>
+</nav>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+    <div class="w-full max-w-md">
+        <div class="card">
+            <h1 class="text-3xl font-bold mb-6 text-center">Login</h1>
+            
+            {% if error %}
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+                {{ error }}
+            </div>
+            {% endif %}
+            
+            <form method="POST" class="space-y-4">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-full">Login</button>
+            </form>
+            
+            <p class="text-center mt-4 text-gray-600">
+                Don't have an account? <a href="/public/signup" class="text-purple-600 font-bold">Sign up</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

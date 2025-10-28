@@ -1,0 +1,165 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Dashboard - Ticket Management{% endblock %}
+
+{% block content %}
+<nav class="bg-white shadow-sm">
+    <div class="container flex items-center justify-between py-4">
+        <a href="/public/" class="text-2xl font-bold text-purple-600">TicketHub</a>
+        <div class="flex items-center gap-4">
+            <span class="text-gray-600">{{ user.email }}</span>
+            <a href="/public/logout" class="btn btn-secondary">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Dashboard</h1>
+        <button onclick="openCreateModal()" class="btn btn-primary">New Ticket</button>
+    </div>
+    
+    <!-- Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="card">
+            <div class="text-gray-600 text-sm font-medium">Total Tickets</div>
+            <div class="text-3xl font-bold text-purple-600">{{ stats.total }}</div>
+        </div>
+        <div class="card">
+            <div class="text-gray-600 text-sm font-medium">Open</div>
+            <div class="text-3xl font-bold text-green-600">{{ stats.open }}</div>
+        </div>
+        <div class="card">
+            <div class="text-gray-600 text-sm font-medium">In Progress</div>
+            <div class="text-3xl font-bold text-amber-600">{{ stats.inProgress }}</div>
+        </div>
+        <div class="card">
+            <div class="text-gray-600 text-sm font-medium">Closed</div>
+            <div class="text-3xl font-bold text-gray-600">{{ stats.closed }}</div>
+        </div>
+    </div>
+    
+    <!-- Tickets Table -->
+    <div class="card">
+        <h2 class="text-xl font-bold mb-4">Tickets</h2>
+        {% if tickets|length > 0 %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b">
+                        <th class="text-left py-3 px-4 font-semibold">Title</th>
+                        <th class="text-left py-3 px-4 font-semibold">Status</th>
+                        <th class="text-left py-3 px-4 font-semibold">Priority</th>
+                        <th class="text-left py-3 px-4 font-semibold">Created</th>
+                        <th class="text-left py-3 px-4 font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4">{{ ticket.title }}</td>
+                        <td class="py-3 px-4">
+                            <span class="badge badge-{{ ticket.status }}">{{ ticket.status|replace({'_': ' '})|title }}</span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="badge badge-{{ ticket.priority }}">{{ ticket.priority|title }}</span>
+                        </td>
+                        <td class="py-3 px-4 text-sm text-gray-600">{{ ticket.createdAt }}</td>
+                        <td class="py-3 px-4">
+                            <button onclick="openEditModal('{{ ticket.id }}')" class="btn btn-secondary text-sm mr-2">Edit</button>
+                            <button onclick="deleteTicket('{{ ticket.id }}')" class="btn btn-danger text-sm">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-gray-600 text-center py-8">No tickets yet. Create one to get started!</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Create Ticket Modal -->
+<div id="createModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">Create New Ticket</div>
+        <form id="createForm" onsubmit="handleCreateTicket(event)">
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                <input type="text" id="createTitle" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="createDescription" class="form-input" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select id="createStatus" class="form-input" required>
+                    <option value="open">Open</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Priority</label>
+                <select id="createPriority" class="form-input" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeCreateModal()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openCreateModal() {
+    document.getElementById('createModal').classList.add('active');
+}
+
+function closeCreateModal() {
+    document.getElementById('createModal').classList.remove('active');
+}
+
+function handleCreateTicket(event) {
+    event.preventDefault();
+    
+    const data = {
+        action: 'create',
+        title: document.getElementById('createTitle').value,
+        description: document.getElementById('createDescription').value,
+        status: document.getElementById('createStatus').value,
+        priority: document.getElementById('createPriority').value
+    };
+    
+    fetch('/public/api/tickets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then(() => {
+        location.reload();
+    });
+}
+
+function deleteTicket(id) {
+    if (confirm('Are you sure you want to delete this ticket?')) {
+        fetch('/public/api/tickets', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'delete', id: id })
+        }).then(() => {
+            location.reload();
+        });
+    }
+}
+
+function openEditModal(id) {
+    alert('Edit functionality would be implemented here');
+}
+</script>
+{% endblock %}
