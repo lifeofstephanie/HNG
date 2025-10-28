@@ -12,42 +12,46 @@ $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig = new \Twig\Environment($loader);
 
 // Helper functions
-function isLoggedIn() {
+function isLoggedIn()
+{
     return isset($_SESSION['user']);
 }
 
-function requireLogin() {
+function requireLogin()
+{
     if (!isLoggedIn()) {
-        header('Location: /public/login');
+        header('Location: /login');
         exit;
     }
 }
 
-function getTickets() {
+function getTickets()
+{
     if (!isset($_SESSION['tickets'])) {
         $_SESSION['tickets'] = [];
     }
     return $_SESSION['tickets'];
 }
 
-function saveTickets($tickets) {
+function saveTickets($tickets)
+{
     $_SESSION['tickets'] = $tickets;
 }
 
 // Routes
-if ($request_uri === '/' || $request_uri === '/public/') {
+if ($request_uri === '/' || $request_uri === '/') {
     echo $twig->render('home.html.twig');
-} elseif ($request_uri === '/public/login') {
+} elseif ($request_uri === '/login') {
     if (isLoggedIn()) {
-        header('Location: /public/dashboard');
+        header('Location: /dashboard');
         exit;
     }
-    
+
     $error = '';
     if ($request_method === 'POST') {
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
-        
+
         if (empty($email) || empty($password)) {
             $error = 'Email and password are required';
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -55,24 +59,24 @@ if ($request_uri === '/' || $request_uri === '/public/') {
         } else {
             // Simple authentication (in production, use proper password hashing)
             $_SESSION['user'] = ['email' => $email];
-            header('Location: /public/dashboard');
+            header('Location: /dashboard');
             exit;
         }
     }
-    
+
     echo $twig->render('login.html.twig', ['error' => $error]);
-} elseif ($request_uri === '/public/signup') {
+} elseif ($request_uri === '/signup') {
     if (isLoggedIn()) {
-        header('Location: /public/dashboard');
+        header('Location: /dashboard');
         exit;
     }
-    
+
     $error = '';
     if ($request_method === 'POST') {
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
         $confirmPassword = $_POST['confirmPassword'] ?? '';
-        
+
         if (empty($email) || empty($password) || empty($confirmPassword)) {
             $error = 'All fields are required';
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -83,15 +87,15 @@ if ($request_uri === '/' || $request_uri === '/public/') {
             $error = 'Passwords do not match';
         } else {
             $_SESSION['user'] = ['email' => $email];
-            header('Location: /public/dashboard');
+            header('Location: /dashboard');
             exit;
         }
     }
-    
+
     echo $twig->render('signup.html.twig', ['error' => $error]);
-} elseif ($request_uri === '/public/dashboard') {
+} elseif ($request_uri === '/dashboard') {
     requireLogin();
-    
+
     $tickets = getTickets();
     $stats = [
         'total' => count($tickets),
@@ -99,18 +103,18 @@ if ($request_uri === '/' || $request_uri === '/public/') {
         'inProgress' => count(array_filter($tickets, fn($t) => $t['status'] === 'in-progress')),
         'closed' => count(array_filter($tickets, fn($t) => $t['status'] === 'closed')),
     ];
-    
+
     echo $twig->render('dashboard.html.twig', [
         'user' => $_SESSION['user'],
         'tickets' => $tickets,
         'stats' => $stats
     ]);
-} elseif ($request_uri === '/public/api/tickets' && $request_method === 'POST') {
+} elseif ($request_uri === '/api/tickets' && $request_method === 'POST') {
     requireLogin();
-    
+
     $data = json_decode(file_get_contents('php://input'), true);
     $tickets = getTickets();
-    
+
     if ($data['action'] === 'create') {
         $ticket = [
             'id' => uniqid(),
@@ -140,9 +144,9 @@ if ($request_uri === '/' || $request_uri === '/public/') {
         saveTickets(array_values($tickets));
         echo json_encode(['success' => true]);
     }
-} elseif ($request_uri === '/public/logout') {
+} elseif ($request_uri === '/logout') {
     session_destroy();
-    header('Location: /public/');
+    header('Location: /');
     exit;
 } else {
     http_response_code(404);
