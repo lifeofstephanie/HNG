@@ -1,8 +1,8 @@
 {
-  "name": "ticket-app-twig",
+  "name": "stephanie/ticket-app-twig",
   "description": "Ticket Management App with Twig",
   "require": {
-    "twig/twig": "^3.0"
+    "twig/twig": "^3.21"
   },
   "autoload": {
     "psr-4": {
